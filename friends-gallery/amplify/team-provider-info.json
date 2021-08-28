@@ -10,6 +10,11 @@
       "StackName": "amplify-friendsgallery-dev-141127",
       "StackId": "arn:aws:cloudformation:us-east-1:143385487845:stack/amplify-friendsgallery-dev-141127/fb96d840-0822-11ec-9645-125cc983bfe5",
       "AmplifyAppId": "d3kp9r5tzdu2dx"
+    },
+    "categories": {
+      "auth": {
+        "friendsgallerybbe5ced1": {}
+      }
     }
   }
 }
