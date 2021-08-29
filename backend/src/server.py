@@ -17,7 +17,7 @@ CORS(app)
 def home():
     return 'Hello!', 200
 
-@app.route('/approve', methods=['POST'])
+@app.route('/approval', methods=['POST'])
 def approve():
     content = request.json
     if not 'photo_id' in content:
@@ -120,10 +120,12 @@ def photos():
             if (user == 'admin'):
                 photos = photosRef.stream()
             else:
-                photos = photosRef.where('status','==','approved').stream()
+                photos = photosRef.where('status','!=','rejected').stream()
             response_data = []
             for photo in photos:
                 photo_data = photo.to_dict()
+                if user != 'admin' and photo_data['status'] == 'pending' and photo_data['uploaded_by'] != user:
+                    continue
                 if user in photo_data['liked_by']:
                     photo_data['liked_by_user'] = True
                 else:

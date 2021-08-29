@@ -51,7 +51,12 @@ export const albumInfo = {
                     data: JSON.stringify(photo)
                 }   
                 await axios(config);
-                
+
+                photo.status = username == 'admin' ? 'approved' : 'pending';
+                photo.liked_by_user = false;
+                photo.likes_count = 0;
+                photo.comments = new Array();
+
                 return Promise.resolve(photo)
             } catch (error) {
                 console.log("createPhoto error", error)
@@ -98,13 +103,33 @@ export const albumInfo = {
                 return Promise.resolve(response.data);
             }
             catch (error) {
-                console.log("likePhoto error", error)
+                console.log("processLike error", error)
                 return Promise.reject(error);
             }
         },
 
         async processApproval(_, data) {
-            console.log(data)
+            let {photo_id, action} = data;
+            let config = {
+                method: 'POST',
+                url: `http://localhost:3000/approval`,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: JSON.stringify({
+                    photo_id: photo_id,
+                    action: action
+                })
+            }   
+
+            try {
+                let response = await axios(config);
+                return Promise.resolve(response.data);
+            }
+            catch (error) {
+                console.log("processApproval error", error)
+                return Promise.reject(error);
+            }
         }
     }
 }

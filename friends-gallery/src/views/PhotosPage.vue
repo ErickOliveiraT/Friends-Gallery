@@ -28,16 +28,31 @@
           class="w-4/12"
         ></amplify-s3-image>
         <br>
-        <div id='approve' v-if="user.username=='admin'">
-          <span class="mt-2 text-base leading-normal">Status: {{photo.status}}<br></span>
+        <div id='approval' v-if="user.username=='admin'">
+          <div v-if="photo.status=='pending'">
+            <span class="mt-2 text-base leading-normal" style="color:red">Pending approval<br></span>
+            <span class="mt-2 text-base leading-normal">Do you want this photo to be online?<br></span>
+            <button type="submit" class="btn" v-on:click="processApproval(photo.id,'approve')"> ✔️ <br></button>
+            <button type="submit" class="btn" v-on:click="processApproval(photo.id,'reject')"> ❌ <br></button>
+          </div>
+          <div v-if="photo.status=='rejected'">
+            <span class="mt-2 text-base leading-normal" style="color:red">Photo Rejected<br></span>
+            <span class="mt-2 text-base leading-normal">Click on the button to turn this photo online:<br></span>
+            <button type="submit" class="btn" v-on:click="processApproval(photo.id,'approve')"> ✔️ <br></button>
+          </div>
         </div>
-        <div id='like'>
+        <div id='approval_warning' v-if="photo.status=='pending'&& user.username!='admin'">
+          <span class="mt-2 text-base leading-normal" style="color:red">Pending approval<br></span>
+        </div>
+        <div id='like' v-if="photo.status=='approved'">
           <span class="mt-2 text-base leading-normal">Likes: {{photo.likes_count}}</span>
           <button type="submit" class="btn" v-if="!photo.liked_by_user" v-on:click="processLike(photo.id,'like')"> 🤍 <br></button>
           <button type="submit" class="btn" v-if="photo.liked_by_user" v-on:click="processLike(photo.id,'unlike')"> ❤️ <br></button>
         </div>
-        <span class="mt-2 text-base leading-normal" v-if="photo.comments.length>0">Comments:</span><br>
-        <span class="mt-2 text-base leading-normal" v-for="(comment,text) in photo.comments" :key="text">{{comment.user}}: {{comment.text}}<br></span><br>
+        <div id='comments' v-if="photo.status=='approved'">
+          <span class="mt-2 text-base leading-normal" v-if="photo.comments.length>0">Comments:</span><br>
+          <span class="mt-2 text-base leading-normal" v-for="(comment,text) in photo.comments" :key="text">{{comment.user}}: {{comment.text}}<br></span><br>
+        </div>
       </div>
     </div>
   </div>
@@ -58,7 +73,8 @@
       ...mapActions({
         createPhotoVue: "albumInfo/createPhoto",
         getPhotosVue: "albumInfo/getPhotos",
-        processLikeVue: "albumInfo/processLike"
+        processLikeVue: "albumInfo/processLike",
+        processApprovalVue: "albumInfo/processApproval"
       }),
 
       async onFileChange(file) {
@@ -103,9 +119,10 @@
         }
       },
 
-      
-
-      
+      async processApproval(photo_id, action) {
+        let photo = await this.processApprovalVue({photo_id, action});
+        this.updatePhoto(photo_id, photo);
+      }
     },
 
     computed: {
