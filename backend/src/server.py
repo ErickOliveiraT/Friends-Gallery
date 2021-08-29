@@ -47,14 +47,28 @@ def likes():
         return 'You must provide photo_id', 400
     if not 'user' in content:
         return 'You must provide user', 400
+    if not 'action' in content:
+        return 'You must provide action', 400
     photo_id = content['photo_id']
     user = content['user']
+    action = content['action']
+    if action != 'like' and action != 'unlike':
+        return 'Action must be like or unlike', 400
     photo = photosRef.document(photo_id).get()
     if photo.exists:
         photo = photo.to_dict()
-        photo['liked_by'].append(user)
-        photo['likes_count'] = photo['likes_count'] + 1
-        photosRef.document(photo_id).set(photo)
+        if action == 'like':
+            if not user in photo['liked_by']:
+                photo['liked_by'].append(user)
+            photo['likes_count'] = photo['likes_count'] + 1
+            photosRef.document(photo_id).set(photo)
+            photo['liked_by_user'] = True
+        else:
+            if user in photo['liked_by']:
+                photo['liked_by'].remove(user)
+            photo['likes_count'] = photo['likes_count'] - 1
+            photosRef.document(photo_id).set(photo)
+            photo['liked_by_user'] = False
         return jsonify(photo)
     else:
         return 'Photo not found', 404
@@ -109,7 +123,12 @@ def photos():
                 photos = photosRef.where('status','==','approved').stream()
             response_data = []
             for photo in photos:
-                response_data.append(photo.to_dict())
+                photo_data = photo.to_dict()
+                if user in photo_data['liked_by']:
+                    photo_data['liked_by_user'] = True
+                else:
+                    photo_data['liked_by_user'] = False
+                response_data.append(photo_data)
             return jsonify(response_data)
         else:
             return 'You must provide user', 400

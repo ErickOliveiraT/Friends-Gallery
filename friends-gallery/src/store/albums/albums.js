@@ -69,7 +69,6 @@ export const albumInfo = {
             }   
 
             try {
-                //console.log('request sent: ', config);
                 let response = await axios(config);
                 return Promise.resolve(response.data);
             }
@@ -77,6 +76,35 @@ export const albumInfo = {
                 console.log("createPhoto error", error)
                 return Promise.reject(error);
             }
+        },
+
+        async processLike(_, data) {
+            let {photo_id, username, action} = data;
+            let config = {
+                method: 'POST',
+                url: `http://localhost:3000/likes`,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: JSON.stringify({
+                    photo_id: photo_id,
+                    user: username,
+                    action: action
+                })
+            }   
+
+            try {
+                let response = await axios(config);
+                return Promise.resolve(response.data);
+            }
+            catch (error) {
+                console.log("likePhoto error", error)
+                return Promise.reject(error);
+            }
+        },
+
+        async processApproval(_, data) {
+            console.log(data)
         }
     }
 }
