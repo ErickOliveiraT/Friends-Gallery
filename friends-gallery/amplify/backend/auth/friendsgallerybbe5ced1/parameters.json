@@ -1,6 +1,6 @@
 {
     "identityPoolName": "friendsgallerybbe5ced1_identitypool_bbe5ced1",
-    "allowUnauthenticatedIdentities": false,
+    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "friendbbe5ced1",
     "userPoolName": "friendsgallerybbe5ced1_userpool_bbe5ced1",
     "autoVerifiedAttributes": [

@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Home from '../views/Home.vue';
 import SignUpPage from '../views/SignUpPage.vue';
 import AlbumsDetailPage from '../views/AlbumsDetailPage.vue';
-import AlbumsPage from '../views/AlbumsPage.vue';
+import PhotosPage from '../views/PhotosPage.vue';
 import { Auth } from 'aws-amplify';
 
 const routes = [
@@ -23,9 +23,9 @@ const routes = [
     meta: {requiresAuth: true}
   },
   {
-    path: '/albums',
-    name: 'AlbumsPage',
-    component: AlbumsPage,
+    path: '/photos',
+    name: 'PhotosPage',
+    component: PhotosPage,
     meta: {requiresAuth: true}
   }
 ]
