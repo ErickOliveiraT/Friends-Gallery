@@ -43,6 +43,10 @@ def approve():
 @app.route('/likes', methods=['POST'])
 def likes():
     content = request.json
+    if not 'photo_id' in content:
+        return 'You must provide photo_id', 400
+    if not 'user' in content:
+        return 'You must provide user', 400
     photo_id = content['photo_id']
     user = content['user']
     photo = photosRef.document(photo_id).get()
@@ -59,6 +63,12 @@ def likes():
 def comments():
     if request.method == 'POST':
         content = request.json
+        if not 'photo_id' in content:
+            return 'You must provide photo_id', 400
+        if not 'user' in content:
+            return 'You must provide user', 400
+        if not 'text' in content:
+            return 'You must provide text', 400
         photo_id = content['photo_id']
         user = content['user']
         text = content['text']
@@ -91,21 +101,35 @@ def comments():
 @app.route('/photos', methods=['GET', 'POST'])
 def photos():
     if request.method == 'GET':
+        content = request.json
+        if not 'user' in content:
+            return 'You must provide user', 400
+        user = content['user']
+        if (user == 'admin'):
+            photos = photosRef.stream()
+        else:
+            photos = photosRef.where('status','==','approved').stream()
         response_data = []
-        photos = photosRef.stream()
         for photo in photos:
             response_data.append(photo.to_dict())
         return jsonify(response_data)
     if request.method == 'POST':
         content = request.json
-        id = content['id']
+        if not 'photo_id' in content:
+            return 'You must provide photo_id', 400
+        if not 'contentType' in content:
+            return 'You must provide contentType', 400
+        if not 'fullsize' in content:
+            return 'You must provide fullsize', 400
+        if not 'uploaded_by' in content:
+            return 'You must provide uploaded_by', 400
+        id = content['photo_id']
         contentType = content['contentType']
         fullsize = content['fullsize']
         uploaded_by = content['uploaded_by']
         status = 'pending'
         if (uploaded_by == 'admin'):
             status = 'approved'
-
         photo = {
             'id': id,
             'contentType': contentType,
@@ -118,9 +142,7 @@ def photos():
             'created_at': datetime.now(),
             'updated_at': datetime.now()
         }
-
         photosRef.document(id).set(photo)
-
         return jsonify(photo)
 
 if __name__ == '__main__':
