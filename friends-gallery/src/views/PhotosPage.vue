@@ -23,7 +23,7 @@
     <div class="flex flex-wrap p-10 justify-center m-auto w-full" v-if="photos">
       <div class="shadow-xl ml-4 mt-4 w-4/12" v-for="(photo, idx) in photos" :key="idx">
         <amplify-s3-image
-          level="protected"
+          level="public"
           :img-key="photo.thumbnail ? photo.thumbnail.key : photo.fullsize.key"
           class="w-4/12"
         ></amplify-s3-image>
@@ -33,7 +33,7 @@
 </template>
 
 <script>
-  import { mapActions } from "vuex";
+  import { mapActions, mapGetters } from "vuex";
   
   export default {
     mounted() {
@@ -41,12 +41,12 @@
     },
     data: () => ({
       photos: [],
-      user: null
     }),
 
     methods: {
       ...mapActions({
         createPhotoVue: "albumInfo/createPhoto",
+        getPhotosVue: "albumInfo/getPhotos"
       }),
 
       async onFileChange(file) {
@@ -55,9 +55,10 @@
         }
         try {
           //console.log('file: ', {file: file.target.files[0]});
-          let photo = await this.createPhotoVue({file: file.target.files[0]});
-          console.log('photo: ', photo)
+          let photo = await this.createPhotoVue({file: file.target.files[0], username: this.user.username});
+          //console.log('photo: ', photo)
           this.photos.push(photo);
+          console.log('Photos: ', this.photos.length);
           //await this.$store.dispatch("albumInfo/createPhoto", {file: file.target.files[0]});
           //this.getPhotos();
         } catch (error) {
@@ -66,9 +67,17 @@
       },
 
       async getPhotos() {
-        
+        let photos = await this.getPhotosVue(this.user.username);
+        //console.log('photos from API: ', photos);
+        this.photos = photos;
       }
     },
+
+    computed: {
+      ...mapGetters({
+        user: "auth/user",
+      })
+    }
   };
 </script>
 

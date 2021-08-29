@@ -48,7 +48,7 @@
                         username: this.username,
                         password: this.password,
                     });
-                    this.$router.push("/albums");
+                    this.$router.push("/photos");
                 } catch (error) {
                     this.error = error;
                 }

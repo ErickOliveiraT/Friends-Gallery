@@ -101,29 +101,29 @@ def comments():
 @app.route('/photos', methods=['GET', 'POST'])
 def photos():
     if request.method == 'GET':
-        content = request.json
-        if not 'user' in content:
-            return 'You must provide user', 400
-        user = content['user']
-        if (user == 'admin'):
-            photos = photosRef.stream()
+        if 'user' in request.args:
+            user = request.args['user']
+            if (user == 'admin'):
+                photos = photosRef.stream()
+            else:
+                photos = photosRef.where('status','==','approved').stream()
+            response_data = []
+            for photo in photos:
+                response_data.append(photo.to_dict())
+            return jsonify(response_data)
         else:
-            photos = photosRef.where('status','==','approved').stream()
-        response_data = []
-        for photo in photos:
-            response_data.append(photo.to_dict())
-        return jsonify(response_data)
+            return 'You must provide user', 400
     if request.method == 'POST':
         content = request.json
-        if not 'photo_id' in content:
-            return 'You must provide photo_id', 400
+        if not 'id' in content:
+            return 'You must provide id', 400
         if not 'contentType' in content:
             return 'You must provide contentType', 400
         if not 'fullsize' in content:
             return 'You must provide fullsize', 400
         if not 'uploaded_by' in content:
             return 'You must provide uploaded_by', 400
-        id = content['photo_id']
+        id = content['id']
         contentType = content['contentType']
         fullsize = content['fullsize']
         uploaded_by = content['uploaded_by']
