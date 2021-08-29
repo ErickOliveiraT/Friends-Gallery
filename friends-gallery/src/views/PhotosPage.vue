@@ -50,8 +50,19 @@
           <button type="submit" class="btn" v-if="photo.liked_by_user" v-on:click="processLike(photo.id,'unlike')"> ❤️ <br></button>
         </div>
         <div id='comments' v-if="photo.status=='approved'">
-          <span class="mt-2 text-base leading-normal" v-if="photo.comments.length>0">Comments:</span><br>
-          <span class="mt-2 text-base leading-normal" v-for="(comment,text) in photo.comments" :key="text">{{comment.user}}: {{comment.text}}<br></span><br>
+          <span class="mt-2 text-base leading-normal" v-if="photo.comments.length>0" style="font-weight: bold">Comments:</span><br>
+          <span class="mt-2 text-base leading-normal" v-for="(comment,text) in photo.comments" :key="text">{{comment.user}}: {{comment.text}}<br></span>
+          <label>
+            <input
+              class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              type="text"
+              placeholder="Write a comment"
+              :id="`img-${photo.id.split('-')[0]}`"
+              name="photo.id"
+              v-model="comments[photo.id]"
+            />
+            <button type="submit" class="btn-blue" v-on:click="submitComment(photo.id)">Publish</button>
+          </label>
         </div>
       </div>
     </div>
@@ -66,7 +77,8 @@
       this.getPhotos();
     },
     data: () => ({
-      photos: []
+      photos: [],
+      comments: {}
     }),
 
     methods: {
@@ -74,7 +86,8 @@
         createPhotoVue: "albumInfo/createPhoto",
         getPhotosVue: "albumInfo/getPhotos",
         processLikeVue: "albumInfo/processLike",
-        processApprovalVue: "albumInfo/processApproval"
+        processApprovalVue: "albumInfo/processApproval",
+        submitCommentVue: "albumInfo/submitComment"
       }),
 
       async onFileChange(file) {
@@ -122,6 +135,21 @@
       async processApproval(photo_id, action) {
         let photo = await this.processApprovalVue({photo_id, action});
         this.updatePhoto(photo_id, photo);
+      },
+
+      async submitComment(photo_id) {
+        const comment = this.comments[photo_id];
+        this.insertComment(photo_id, {text: comment, user: this.user.username}); //Just for fast response
+        await this.submitCommentVue({photo_id, comment, username: this.user.username});
+      },
+
+      insertComment(photo_id, comment) {
+        for (let i = 0; i < this.photos.length; i++) {
+          if (this.photos[i].id == photo_id) {
+            this.photos[i].comments.push(comment);
+            break;
+          }
+        }
       }
     },
 

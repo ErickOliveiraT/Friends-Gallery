@@ -130,6 +130,31 @@ export const albumInfo = {
                 console.log("processApproval error", error)
                 return Promise.reject(error);
             }
+        },
+
+        async submitComment(_, data) {
+            let {photo_id, comment, username} = data;
+            let config = {
+                method: 'POST',
+                url: `http://localhost:3000/comments`,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: JSON.stringify({
+                    photo_id: photo_id,
+                    text: comment,
+                    user: username
+                })
+            }   
+
+            try {
+                let response = await axios(config);
+                return Promise.resolve(response.data);
+            }
+            catch (error) {
+                console.log("submitComment error", error)
+                return Promise.reject(error);
+            }
         }
     }
 }
