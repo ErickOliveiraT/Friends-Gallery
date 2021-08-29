@@ -36,7 +36,7 @@ export const albumInfo = {
 
             //s3 bucket storage add file to it
             try {
-                //console.log('photo: ', photo)
+                console.log('photo: ', JSON.stringify(photo))
                 await Storage.put(key, file, {
                     level:'protected',
                     contentType: mimeType,
