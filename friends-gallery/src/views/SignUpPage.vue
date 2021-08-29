@@ -90,7 +90,7 @@ export default {
           username,
           password,
         });
-        this.$router.push("/albums");
+        this.$router.push("/photos");
       } catch (error) {
         console.log(error);
         this.error = error;
