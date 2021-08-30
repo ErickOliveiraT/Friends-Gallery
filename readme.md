@@ -38,6 +38,16 @@ This application includes the following features:
 
 ## Usage
 
+### Log in
+
+![alt text](https://github.com/ErickOliveiraT/Friends-Gallery/blob/main/img/login.PNG?raw=true)
+
+If you want access admin user, use the credentials provided via email. I also sent a test user.
+
+![alt text](https://github.com/ErickOliveiraT/Friends-Gallery/blob/main/img/signup.PNG?raw=true)
+
+If you want to create your own user, you can do it by clicking on the sign up button.
+
 ### Uploading photos
 
 ![alt text](https://github.com/ErickOliveiraT/Friends-Gallery/blob/main/img/upload.PNG?raw=true)
