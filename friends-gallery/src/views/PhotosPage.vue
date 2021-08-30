@@ -90,11 +90,11 @@
         submitCommentVue: "albumInfo/submitComment"
       }),
 
+      //Handle file selection
       async onFileChange(file) {
-        if (!file.target || !file.target.files[0]) {
-          return;
-        }
+        if (!file.target || !file.target.files[0]) return;
         try {
+          //upload photo
           let photo = await this.createPhotoVue({file: file.target.files[0], username: this.user.username});
           this.photos.push(photo);
         } catch (error) {
@@ -102,11 +102,13 @@
         }
       },
 
+      //Get stored photos
       async getPhotos() {
         let photos = await this.getPhotosVue(this.user.username);
         this.photos = photos;
       },
 
+      //Update photo data in state
       updatePhoto(photo_id, data) {
         for (let i = 0; i < this.photos.length; i++) {
           if (this.photos[i].id == photo_id) {
@@ -116,12 +118,14 @@
         }
       },
 
+      //Handle like button
       async processLike(photo_id, action) {
         this.updateLikeButton(photo_id, action); //Just for fast response
         let photo = await this.processLikeVue({photo_id, username: this.user.username, action});
         this.updatePhoto(photo_id, photo);
       },
 
+      //Change like button type (avoid await for faster response)
       updateLikeButton(photo_id, action) {
         for (let i = 0; i < this.photos.length; i++) {
           if (this.photos[i].id == photo_id) {
@@ -132,17 +136,21 @@
         }
       },
 
+      //Handle approve/reject button
       async processApproval(photo_id, action) {
         let photo = await this.processApprovalVue({photo_id, action});
         this.updatePhoto(photo_id, photo);
       },
 
+      //Handle comment submit
       async submitComment(photo_id) {
         const comment = this.comments[photo_id];
         this.insertComment(photo_id, {text: comment, user: this.user.username}); //Just for fast response
         await this.submitCommentVue({photo_id, comment, username: this.user.username});
+        document.getElementById(`img-${photo_id.split('-')[0]}`).value = ""; //Clear text input
       },
 
+      //Update comment list (avoid await for faster response)
       insertComment(photo_id, comment) {
         for (let i = 0; i < this.photos.length; i++) {
           if (this.photos[i].id == photo_id) {

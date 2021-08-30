@@ -10,17 +10,20 @@ export const albumInfo = {
 
     },
     actions: {
+        //Upload a photo to AWS S3 and save it on database
         async createPhoto(_, data) {
             const {
                 aws_user_files_s3_bucket_region: region,
                 aws_user_files_s3_bucket: bucket
             } = awsconfig;
+
             let { file, type: mimeType, username } = data;
             const extension = file.name.substr(file.name.lastIndexOf(".") + 1);
             if (extension.toLowerCase() == 'png') mimeType = 'image/png';
             else mimeType = 'image/jpeg'
             const photoId = v4();
             const key = `images/${photoId}.${extension}`;
+
             const photo = {
                 id: photoId,
                 contentType: mimeType,
@@ -32,18 +35,19 @@ export const albumInfo = {
                 uploaded_by: username
             }
 
-            //s3 bucket storage add file to it
             try {
                 console.log('photo: ', JSON.stringify(photo))
+                //Upload imagem to S3
                 await Storage.put(key, file, {
                     level:'public',
                     contentType: mimeType,
                     metadata: { photoId }
                 });
 
+                //Call API to store image info on database
                 let config = {
                     method: 'POST',
-                    url: 'https://52.91.242.188/photos',
+                    url: 'http://44.197.4.83/photos',
                     headers: {
                         'Content-Type': 'application/json',
                         'Accept': '*/*'
@@ -52,6 +56,7 @@ export const albumInfo = {
                 }   
                 await axios(config);
 
+                //Set extra photo fields to avoid a new database query
                 photo.status = username == 'admin' ? 'approved' : 'pending';
                 photo.liked_by_user = false;
                 photo.likes_count = 0;
@@ -64,10 +69,11 @@ export const albumInfo = {
             }
         },
 
+        //Call API to get photos from database
         async getPhotos(_, username) {
             let config = {
                 method: 'GET',
-                url: `https://52.91.242.188/photos?user=${username}`,
+                url: `http://44.197.4.83/photos?user=${username}`,
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -83,11 +89,12 @@ export const albumInfo = {
             }
         },
 
+        //Call API to like or unlike a photo
         async processLike(_, data) {
             let {photo_id, username, action} = data;
             let config = {
                 method: 'POST',
-                url: `https://52.91.242.188/likes`,
+                url: `http://44.197.4.83/likes`,
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -108,11 +115,12 @@ export const albumInfo = {
             }
         },
 
+        //Call API to approve or reject a photo (only admin)
         async processApproval(_, data) {
             let {photo_id, action} = data;
             let config = {
                 method: 'POST',
-                url: `https://52.91.242.188/approval`,
+                url: `http://44.197.4.83/approval`,
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -132,11 +140,12 @@ export const albumInfo = {
             }
         },
 
+        //Call API to submit a new comment on a photo
         async submitComment(_, data) {
             let {photo_id, comment, username} = data;
             let config = {
                 method: 'POST',
-                url: `https://52.91.242.188/comments`,
+                url: `http://44.197.4.83/comments`,
                 headers: {
                     'Content-Type': 'application/json'
                 },

@@ -1,22 +1,26 @@
-from flask import Flask, json, request, jsonify
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
 from datetime import datetime
 
+#Firestore Database config
 cred = credentials.Certificate("./firebase/friends-gallery.json")
 firebase_admin.initialize_app(cred)
 db = firestore.client()
 photosRef = db.collection('photos')
 
+#Init Flask
 app = Flask(__name__)
 CORS(app)
 
+#Test route
 @app.route('/', methods=['GET'])
 def home():
     return 'Hello!', 200
 
+#Handle photo approves and rejects
 @app.route('/approval', methods=['POST'])
 def approve():
     content = request.json
@@ -40,6 +44,7 @@ def approve():
     else:
         return 'Photo not found', 404
 
+#Handle photo likes and unlikes
 @app.route('/likes', methods=['POST'])
 def likes():
     content = request.json
@@ -73,45 +78,34 @@ def likes():
     else:
         return 'Photo not found', 404
 
-@app.route('/comments', methods=['GET', 'POST'])
+#Store a new comment on a photo
+@app.route('/comments', methods=['POST'])
 def comments():
-    if request.method == 'POST':
-        content = request.json
-        if not 'photo_id' in content:
-            return 'You must provide photo_id', 400
-        if not 'user' in content:
-            return 'You must provide user', 400
-        if not 'text' in content:
-            return 'You must provide text', 400
-        photo_id = content['photo_id']
-        user = content['user']
-        text = content['text']
-        photo = photosRef.document(photo_id).get()
-        if photo.exists:
-            photo = photo.to_dict()
-            comment = {
-                'user': user,
-                'text': text,
-                'created_at': datetime.now()
-            }
-            photo['comments'].append(comment)
-            photosRef.document(photo_id).set(photo)
-            return jsonify(photo['comments'])
-        else:
-            return 'Photo not found', 404
-    if request.method == 'GET':
-        if 'photo_id' in request.args:
-            photo_id = request.args['photo_id']
-            photo = photosRef.document(photo_id).get()
-            if photo.exists:
-                photo = photo.to_dict()
-                return jsonify(photo['comments'])
-            else:
-                return 'Photo not found', 404
-        else:
-            return 'Error: Please specify a photo_id', 400
+    content = request.json
+    if not 'photo_id' in content:
+        return 'You must provide photo_id', 400
+    if not 'user' in content:
+        return 'You must provide user', 400
+    if not 'text' in content:
+        return 'You must provide text', 400
+    photo_id = content['photo_id']
+    user = content['user']
+    text = content['text']
+    photo = photosRef.document(photo_id).get()
+    if photo.exists:
+        photo = photo.to_dict()
+        comment = {
+            'user': user,
+            'text': text,
+            'created_at': datetime.now()
+        }
+        photo['comments'].append(comment)
+        photosRef.document(photo_id).set(photo)
+        return jsonify(photo['comments'])
+    else:
+        return 'Photo not found', 404
 
-
+#Handle photo query and creation
 @app.route('/photos', methods=['GET', 'POST'])
 def photos():
     if request.method == 'GET':
@@ -167,5 +161,5 @@ def photos():
         return jsonify(photo)
 
 if __name__ == '__main__':
-    #app.run(host='0.0.0.0', port=80) #HTTP
-    app.run(host='0.0.0.0', port=443, ssl_context=('cert.pem', 'key.pem')) #HTTPS
+    app.run(host='0.0.0.0', port=80) #HTTP (dev)
+    #app.run(host='0.0.0.0', port=443, ssl_context=('cert.pem', 'key.pem')) #HTTPS (prod)

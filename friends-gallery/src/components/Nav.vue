@@ -36,6 +36,7 @@
                 this.$router.push("/");
             },
         },
+        
         computed: {
             ...mapGetters({
                 user: "auth/user",
