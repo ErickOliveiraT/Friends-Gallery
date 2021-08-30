@@ -47,7 +47,7 @@ export const albumInfo = {
                 //Call API to store image info on database
                 let config = {
                     method: 'POST',
-                    url: 'http://44.197.4.83/photos',
+                    url: 'http://localhost:3000/photos',
                     headers: {
                         'Content-Type': 'application/json',
                         'Accept': '*/*'
@@ -73,7 +73,7 @@ export const albumInfo = {
         async getPhotos(_, username) {
             let config = {
                 method: 'GET',
-                url: `http://44.197.4.83/photos?user=${username}`,
+                url: `http://localhost:3000/photos?user=${username}`,
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -94,7 +94,7 @@ export const albumInfo = {
             let {photo_id, username, action} = data;
             let config = {
                 method: 'POST',
-                url: `http://44.197.4.83/likes`,
+                url: `http://localhost:3000/likes`,
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -120,7 +120,7 @@ export const albumInfo = {
             let {photo_id, action} = data;
             let config = {
                 method: 'POST',
-                url: `http://44.197.4.83/approval`,
+                url: `http://localhost:3000/approval`,
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -145,7 +145,7 @@ export const albumInfo = {
             let {photo_id, comment, username} = data;
             let config = {
                 method: 'POST',
-                url: `http://44.197.4.83/comments`,
+                url: `http://localhost:3000/comments`,
                 headers: {
                     'Content-Type': 'application/json'
                 },

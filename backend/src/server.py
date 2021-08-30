@@ -161,5 +161,6 @@ def photos():
         return jsonify(photo)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=80) #HTTP (dev)
+    app.run(host='0.0.0.0', port=3000) #HTTP (dev)
+    #app.run(host='0.0.0.0', port=80) #HTTP (prod)
     #app.run(host='0.0.0.0', port=443, ssl_context=('cert.pem', 'key.pem')) #HTTPS (prod)
