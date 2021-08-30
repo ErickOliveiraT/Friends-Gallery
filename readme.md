@@ -52,17 +52,27 @@ If you have not liked a photo yet, the heart button will be white. You can click
 
 If you already like a photo, the heart button will be red. You can click on it to unlike button.
 
-The like counter is updated on every action
+The like counter is updated on every action.
 
 - Commenting on photos
 
 ![alt text](https://github.com/ErickOliveiraT/Friends-Gallery/blob/main/img/comment.PNG?raw=true)
 
-If you have not liked a photo yet, the heart button will be white. You can click on it to like a photo.
+Use the text input to write your comment, then click on the publish button to submit your comment.
 
-If you already like a photo, the heart button will be red. You can click on it to unlike button.
+- Approve or reject photos
 
-The like counter is updated on every action
+![alt text](https://github.com/ErickOliveiraT/Friends-Gallery/blob/main/img/approval.PNG?raw=true)
+
+Click on the green button to approve a photo or on the red button to reject a photo.
+
+![alt text](https://github.com/ErickOliveiraT/Friends-Gallery/blob/main/img/undo.PNG?raw=true)
+
+If you rejected a photo, you still can change your mind and turn it online by clicking on the green button.
+
+> Only the admin user (credentials provided via e-mail) can
+> approve or reject uploaded photos. Furthermore, photos uploaded
+> by this user do not need approval to be visible to everyone
 
 ## Run app locally
 
