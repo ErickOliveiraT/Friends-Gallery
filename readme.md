@@ -36,6 +36,34 @@ This application includes the following features:
 
 ![alt text](https://github.com/ErickOliveiraT/Friends-Gallery/blob/main/img/architeture.png?raw=true)
 
+## Usage
+
+- Uploading photos
+
+![alt text](https://github.com/ErickOliveiraT/Friends-Gallery/blob/main/img/upload.PNG?raw=true)
+
+Click on the upload button and select an image on file picker
+
+- Liking photos
+
+![alt text](https://github.com/ErickOliveiraT/Friends-Gallery/blob/main/img/like.PNG?raw=true)
+
+If you have not liked a photo yet, the heart button will be white. You can click on it to like a photo.
+
+If you already like a photo, the heart button will be red. You can click on it to unlike button.
+
+The like counter is updated on every action
+
+- Commenting on photos
+
+![alt text](https://github.com/ErickOliveiraT/Friends-Gallery/blob/main/img/comment.PNG?raw=true)
+
+If you have not liked a photo yet, the heart button will be white. You can click on it to like a photo.
+
+If you already like a photo, the heart button will be red. You can click on it to unlike button.
+
+The like counter is updated on every action
+
 ## Run app locally
 
 - Front-end:
