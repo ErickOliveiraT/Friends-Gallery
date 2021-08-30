@@ -1,3 +1,4 @@
 /secrets
 /backend/src/firebase/*
 /backend/src/temp/*
+/example-photos/*
