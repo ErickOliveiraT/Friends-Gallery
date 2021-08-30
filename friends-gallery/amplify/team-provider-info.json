@@ -1,20 +1,26 @@
 {
-  "dev": {
-    "awscloudformation": {
-      "AuthRoleName": "amplify-friendsgallery-dev-141127-authRole",
-      "UnauthRoleArn": "arn:aws:iam::143385487845:role/amplify-friendsgallery-dev-141127-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::143385487845:role/amplify-friendsgallery-dev-141127-authRole",
-      "Region": "us-east-1",
-      "DeploymentBucketName": "amplify-friendsgallery-dev-141127-deployment",
-      "UnauthRoleName": "amplify-friendsgallery-dev-141127-unauthRole",
-      "StackName": "amplify-friendsgallery-dev-141127",
-      "StackId": "arn:aws:cloudformation:us-east-1:143385487845:stack/amplify-friendsgallery-dev-141127/fb96d840-0822-11ec-9645-125cc983bfe5",
-      "AmplifyAppId": "d3kp9r5tzdu2dx"
-    },
-    "categories": {
-      "auth": {
-        "friendsgallerybbe5ced1": {}
-      }
+    "dev": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-friendsgallery-dev-141127-authRole",
+            "UnauthRoleArn": "arn:aws:iam::143385487845:role/amplify-friendsgallery-dev-141127-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::143385487845:role/amplify-friendsgallery-dev-141127-authRole",
+            "Region": "us-east-1",
+            "DeploymentBucketName": "amplify-friendsgallery-dev-141127-deployment",
+            "UnauthRoleName": "amplify-friendsgallery-dev-141127-unauthRole",
+            "StackName": "amplify-friendsgallery-dev-141127",
+            "StackId": "arn:aws:cloudformation:us-east-1:143385487845:stack/amplify-friendsgallery-dev-141127/fb96d840-0822-11ec-9645-125cc983bfe5",
+            "AmplifyAppId": "d3kp9r5tzdu2dx"
+        },
+        "categories": {
+            "auth": {
+                "friendsgallerybbe5ced1": {}
+            },
+            "hosting": {
+                "amplifyhosting": {
+                    "appId": "d3kp9r5tzdu2dx",
+                    "type": "manual"
+                }
+            }
+        }
     }
-  }
 }

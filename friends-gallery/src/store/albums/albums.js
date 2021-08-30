@@ -43,7 +43,7 @@ export const albumInfo = {
 
                 let config = {
                     method: 'POST',
-                    url: 'http://3.86.81.188/photos',
+                    url: 'https://52.91.242.188/photos',
                     headers: {
                         'Content-Type': 'application/json',
                         'Accept': '*/*'
@@ -67,7 +67,7 @@ export const albumInfo = {
         async getPhotos(_, username) {
             let config = {
                 method: 'GET',
-                url: `http://3.86.81.188/photos?user=${username}`,
+                url: `https://52.91.242.188/photos?user=${username}`,
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -87,7 +87,7 @@ export const albumInfo = {
             let {photo_id, username, action} = data;
             let config = {
                 method: 'POST',
-                url: `http://3.86.81.188/likes`,
+                url: `https://52.91.242.188/likes`,
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -112,7 +112,7 @@ export const albumInfo = {
             let {photo_id, action} = data;
             let config = {
                 method: 'POST',
-                url: `http://3.86.81.188/approval`,
+                url: `https://52.91.242.188/approval`,
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -136,7 +136,7 @@ export const albumInfo = {
             let {photo_id, comment, username} = data;
             let config = {
                 method: 'POST',
-                url: `http://3.86.81.188/comments`,
+                url: `https://52.91.242.188/comments`,
                 headers: {
                     'Content-Type': 'application/json'
                 },
