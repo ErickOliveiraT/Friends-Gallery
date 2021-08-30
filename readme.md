@@ -1,5 +1,7 @@
 # Friends Gallery
 
+![alt text](https://github.com/ErickOliveiraT/Friends-Gallery/blob/main/img/photos.PNG?raw=true)
+
 ## Deployment
 
 - This application is online at: http://34.67.99.174:8080/
