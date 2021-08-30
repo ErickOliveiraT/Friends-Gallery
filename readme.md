@@ -34,7 +34,7 @@ This application includes the following features:
 
 ## Architecture
 
-![alt text](https://github.com/ErickOliveiraT/Friends-Gallery/blob/main/img/architeture.PNG?raw=true)
+![alt text](https://github.com/ErickOliveiraT/Friends-Gallery/blob/main/img/architeture.png?raw=true)
 
 ## Run app locally
 
