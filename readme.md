@@ -38,13 +38,13 @@ This application includes the following features:
 
 ## Usage
 
-- Uploading photos
+### Uploading photos
 
 ![alt text](https://github.com/ErickOliveiraT/Friends-Gallery/blob/main/img/upload.PNG?raw=true)
 
 Click on the upload button and select an image on file picker
 
-- Liking photos
+### Liking photos
 
 ![alt text](https://github.com/ErickOliveiraT/Friends-Gallery/blob/main/img/like.PNG?raw=true)
 
@@ -54,13 +54,13 @@ If you already like a photo, the heart button will be red. You can click on it t
 
 The like counter is updated on every action.
 
-- Commenting on photos
+### Commenting on photos
 
 ![alt text](https://github.com/ErickOliveiraT/Friends-Gallery/blob/main/img/comment.PNG?raw=true)
 
 Use the text input to write your comment, then click on the publish button to submit your comment.
 
-- Approve or reject photos
+### Approve or reject photos
 
 ![alt text](https://github.com/ErickOliveiraT/Friends-Gallery/blob/main/img/approval.PNG?raw=true)
 
