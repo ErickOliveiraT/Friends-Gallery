@@ -26,6 +26,16 @@ This application includes the following features:
 - Add comments to photos
 - Approve or reject photos (only for admin user)
 
+## Important
+
+> Only the admin user (credentials provided via e-mail) can
+> approve or reject uploaded photos. Furthermore, photos uploaded
+> by this user do not need approval to be visible to everyone
+
+## Architecture
+
+![alt text](https://github.com/ErickOliveiraT/Friends-Gallery/blob/main/img/architeture.PNG?raw=true)
+
 ## Run app locally
 
 - Front-end:
